@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{{ path }}
+
+<script type="text/javascript" src="https://services.brid.tv/player/build/brid.min.js"></script> <div id="Brid_82670697" class="brid" style="width:480;height:270;" > </div> <script type="text/javascript"> $bp("Brid_82670697", {"id":"39806","width":480,"height":270,"shuffle":0,"playlist":{"mode":"widget","id":"795","widget_type":"simple_widget"}}); </script>
+
+<br>
+
+
+
+<script type="text/javascript" src="https://services.brid.tv/player/build/brid.min.js"></script> <div id="Brid_82671029" class="brid" style="width:480;height:270;" > </div> <script type="text/javascript"> $bp("Brid_82671029", {"id":"39835","width":480,"height":270,"shuffle":0,"playlist":{"mode":"widget","id":"797","widget_type":"simple_widget"}}); </script>
+
+
+
+
+<div id="my-video"></div>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script src="https://cdn.plyr.io/3.6.4/plyr.polyfilled.js"></script>
+    <script>
+        const player = new Plyr('#my-video', {{
+            controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'fullscreen'],
+            hls: {{
+                xhrSetup: (xhr, url) => {{
+                    xhr.setRequestHeader('Referer', '{request.META.get("HTTP_REFERER", "")}')
+                }}
+            }},
+        }});
+        player.source = {{
+            type: 'video',
+            sources: [{{
+                src: '{data["url"]}',
+                type: 'application/x-mpegURL'
+            }}],
+            poster: '',
+        }};
+    </script>
+
+
+</body>
+</html>

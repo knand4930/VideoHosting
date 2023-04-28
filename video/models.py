@@ -1,10 +1,12 @@
 import uuid
 from django.db import models
-from django.contrib.auth.models import User
+from main.models import User
+from django.conf import settings
 
 
 class Video(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=100)
     description = models.TextField()
     file = models.FileField(upload_to='videos/')
@@ -19,3 +21,38 @@ class Video(models.Model):
 
     def get_embed_url(self):
         return f'/videos/{self.id}/embed/'
+
+
+class VideoPlaylist(models.Model):
+    video = models.ForeignKey(Video, on_delete=models.CASCADE, blank=True, null=True)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    name = models.CharField(max_length=200, blank=True, null=True)
+
+
+class VideoPlayer(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    logo = models.ImageField(upload_to="player/video/logo/", blank=True, null=True)
+    src = models.URLField(blank=True, null=True, default=f'{settings.BASE_URL}/static/player/video/play.min.js')
+    logoPos = models.IntegerField(blank=True, null=True)
+    logoUrl = models.URLField(blank=True, null=True)
+    start_muted = models.BooleanField(default=False)
+    start_volume = models.IntegerField(blank=True, null=True)
+    monetize = models.BooleanField(default=True)
+    name = models.CharField(max_length=200, blank=True, null=True)
+    width = models.IntegerField(blank=True, null=True)
+    height = models.IntegerField(null=True, blank=True)
+    ad_preload = models.BooleanField(default=False)
+    ad_postload = models.BooleanField(default=False)
+    autoplay = models.BooleanField(default=True)
+    volume = models.BooleanField(default=True)
+    fullscreen = models.BooleanField(default=True)
+    controls = models.BooleanField(default=True)
+    controlsBehavior = models.CharField(max_length=200, blank=True, null=True, default="visible")
+    afterPlaylistEnd = models.CharField(max_length=200, blank=True, null=True, default="stop")
+    playlistPlayback = models.CharField(max_length=200, blank=True, null=True, default="continuous")
+    shuffle = models.BooleanField(default=True)
+    autohide_ad_controls = models.BooleanField(default=True)
+
+    def share(self):
+        return f'/video/player/{self.id}/'

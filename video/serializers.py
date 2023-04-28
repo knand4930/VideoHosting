@@ -25,5 +25,5 @@ class VideoPlaylistSerializer(serializers.ModelSerializer):
 
 class VideoPlayerSerializer(serializers.ModelSerializer):
     class Meta:
-        modul = VideoPlayer
+        model = VideoPlayer
         fields = "__all__"

@@ -14,7 +14,7 @@ urlpatterns = [
     path('video/playlist/update/delete/<int:pk>/', VideoPlaylistUpdateDelete.as_view(), name='VideoPlaylistUpdateDelete'),
 
     path('video/player/list/create', VideoPlayerListCreate.as_view(), name='VideoPlayerListCreate'),
-    path('video/player/update/delete/<int:pk>/', VideoPlayerUpdateDelete.as_view(), name='VideoPlayerUpdateDelete'),
+    path('video/player/update/delete/<uuid:pk>/', VideoPlayerUpdateDelete.as_view(), name='VideoPlayerUpdateDelete'),
 
     # path('testing', home, name='home')
 ]

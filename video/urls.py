@@ -16,6 +16,8 @@ urlpatterns = [
     path('video/player/list/create', VideoPlayerListCreate.as_view(), name='VideoPlayerListCreate'),
     path('video/player/update/delete/<int:pk>/', VideoPlayerUpdateDelete.as_view(), name='VideoPlayerUpdateDelete'),
     path('video/player/get/<uuid:id>/', VideoPlayerGet.as_view(), name='VideoPlayerFilterAPI'),
+    path('video/player/update/delete/<uuid:pk>/', VideoPlayerUpdateDelete.as_view(), name='VideoPlayerUpdateDelete'),
+
     # path('testing', home, name='home')
 
     path('content/unit/list/create/', ContentUnitListAPI.as_view(), name='ContentUnitListAPI'),

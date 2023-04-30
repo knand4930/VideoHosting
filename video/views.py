@@ -83,23 +83,20 @@ def home(request):
     return render(request, 'home.html', {'path': path})
 
 
-class VideoPlayerFilter(django_filters.Filter):
+class VidoPlayListFilter(django_filters.Filter):
     id = UUIDFilter(field_name='uuid')
 
     class Meta:
-        model = VideoPlayer
+        model = VideoPlaylist
         fields = ['id']
 
 
-class VideoPlayerFilterAPI(generics.ListAPIView):
-    queryset = VideoPlayer.objects.all()
-    serializer_class = VideoPlayerSerializer
+class VidoPlayListFilterAPI(generics.ListAPIView):
+    queryset = VideoPlaylist.objects.all()
+    serializer_class = VideoPlaylistSerializer
     filter_backends = [DjangoFilterBackend]
-    # filterset_class = VideoPlayerFilter
     filterset_fields = 'id'
 
-
-# class
 
 class VideoPlayerGet(APIView):
     def get(self, request, id, format=None, *args, **kwargs):

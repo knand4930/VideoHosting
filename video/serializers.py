@@ -20,7 +20,7 @@ class VideoSerializer(serializers.ModelSerializer):
 class VideoPlaylistSerializer(serializers.ModelSerializer):
     class Meta:
         model = VideoPlaylist
-        fields = ('id', 'name', 'video', 'user_id')
+        fields = ('id', 'name', 'user_id')
 
 
 class VideoPlayerSerializer(serializers.ModelSerializer):

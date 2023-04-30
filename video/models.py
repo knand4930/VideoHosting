@@ -4,9 +4,15 @@ from main.models import User
 from django.conf import settings
 
 
+class VideoPlaylist(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    name = models.CharField(max_length=200, blank=True, null=True)
+
+
 class Video(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    playlist = models.ForeignKey(VideoPlaylist, on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=100)
     description = models.TextField()
     file = models.FileField(upload_to='videos/')
@@ -21,12 +27,6 @@ class Video(models.Model):
 
     def get_embed_url(self):
         return f'/videos/{self.id}/embed/'
-
-
-class VideoPlaylist(models.Model):
-    video = models.ForeignKey(Video, on_delete=models.CASCADE, blank=True, null=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    name = models.CharField(max_length=200, blank=True, null=True)
 
 
 class VideoPlayer(models.Model):

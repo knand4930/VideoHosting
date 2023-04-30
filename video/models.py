@@ -56,3 +56,9 @@ class VideoPlayer(models.Model):
 
     def share(self):
         return f'/video/player/{self.id}/'
+
+
+class ContentUnit(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    player_id = models.ForeignKey(VideoPlayer, on_delete=models.CASCADE, blank=True, null=True)
+    playlist_id = models.ForeignKey(VideoPlaylist, on_delete=models.CASCADE, blank=True, null=True)

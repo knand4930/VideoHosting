@@ -5,3 +5,4 @@ from .models import *
 admin.site.register(Video)
 admin.site.register(VideoPlaylist)
 admin.site.register(VideoPlayer)
+admin.site.register(ContentUnit)

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Video, VideoPlaylist, VideoPlayer
+from .models import Video, VideoPlaylist, VideoPlayer, ContentUnit
 
 
 class VideoSerializer(serializers.ModelSerializer):
@@ -25,5 +25,15 @@ class VideoPlaylistSerializer(serializers.ModelSerializer):
 
 class VideoPlayerSerializer(serializers.ModelSerializer):
     class Meta:
-        modul = VideoPlayer
+        model = VideoPlayer
+        fields = ('id', 'user_id', 'logo', 'src', 'logoPos', 'logoUrl', 'start_muted', 'start_volume', 'monetize',
+                  'name', 'width', 'height', 'ad_preload', 'ad_postload', 'autoplay', 'volume', 'fullscreen',
+                  'controls',
+                  'controlsBehavior', 'afterPlaylistEnd', 'playlistPlayback', 'shuffle', 'autohide_ad_controls',
+                  'share')
+
+
+class ContentUnitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContentUnit
         fields = "__all__"

@@ -1,12 +1,19 @@
 import os
+
+import django_filters
 from django.shortcuts import render
+from django_filters import UUIDFilter
 from rest_framework import generics, permissions, status
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.http import FileResponse
 from django.conf import settings
-from .models import Video, VideoPlayer, VideoPlaylist
-from .serializers import VideoSerializer, VideoPlaylistSerializer, VideoPlayerSerializer
+from rest_framework.views import APIView
+
+from .models import Video, VideoPlayer, VideoPlaylist, ContentUnit
+from .serializers import VideoSerializer, VideoPlaylistSerializer, VideoPlayerSerializer, ContentUnitSerializer
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class VideoList(generics.ListCreateAPIView):
@@ -70,8 +77,56 @@ class VideoPlayerUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = VideoPlayerSerializer
 
 
-
 def home(request):
     path = f'{settings.BASE_URL}/static/player/video/play.min.js'
     print(path)
     return render(request, 'home.html', {'path': path})
+
+
+class VideoPlayerFilter(django_filters.Filter):
+    id = UUIDFilter(field_name='uuid')
+
+    class Meta:
+        model = VideoPlayer
+        fields = ['id']
+
+
+class VideoPlayerFilterAPI(generics.ListAPIView):
+    queryset = VideoPlayer.objects.all()
+    serializer_class = VideoPlayerSerializer
+    filter_backends = [DjangoFilterBackend]
+    # filterset_class = VideoPlayerFilter
+    filterset_fields = 'id'
+
+
+# class
+
+class VideoPlayerGet(APIView):
+    def get(self, request, id, format=None, *args, **kwargs):
+        data = get_object_or_404(VideoPlayer, id=id)
+        serializer = VideoPlayerSerializer(data)
+        return Response(serializer.data)
+
+
+class VideoGet(APIView):
+    def get(self, request, id, format=None, *args, **kwargs):
+        data = get_object_or_404(Video, id=id)
+        serializer = VideoSerializer(data)
+        return Response(serializer.data)
+
+
+class ContentUnitListAPI(generics.ListCreateAPIView):
+    queryset = ContentUnit.objects.all()
+    serializer_class = ContentUnitSerializer
+
+
+class ContentUnitDeleteUpdateAPI(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ContentUnit.objects.all()
+    serializer_class = ContentUnitSerializer
+
+
+class ContentUnitGet(APIView):
+    def get(self, request, id, format=None, *args, **kwargs):
+        data = get_object_or_404(ContentUnit, id=id)
+        serializer = ContentUnitSerializer(data)
+        return Response(serializer.data)

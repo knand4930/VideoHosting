@@ -8,7 +8,8 @@ class VideoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Video
-        fields = ('id', 'title', 'user_id', 'description', 'file', 'uploaded_at', 'download_url', 'embed_url')
+        fields = (
+        'id', 'title', 'playlist', 'user_id', 'description', 'file', 'uploaded_at', 'download_url', 'embed_url')
 
     def get_download_url(self, obj):
         return obj.get_download_url()

@@ -84,7 +84,7 @@ def home(request):
 
 
 class VidoPlayListFilter(django_filters.Filter):
-    id = UUIDFilter(field_name='uuid')
+    id = UUIDFilter(field_name='id')
 
     class Meta:
         model = VideoPlaylist
@@ -95,7 +95,7 @@ class VidoPlayListFilterAPI(generics.ListAPIView):
     queryset = VideoPlaylist.objects.all()
     serializer_class = VideoPlaylistSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = 'id'
+    filterset_fields = VidoPlayListFilter
 
 
 class VideoPlayerGet(APIView):
@@ -126,4 +126,12 @@ class ContentUnitGet(APIView):
     def get(self, request, id, format=None, *args, **kwargs):
         data = get_object_or_404(ContentUnit, id=id)
         serializer = ContentUnitSerializer(data)
+        return Response(serializer.data)
+
+
+class PlayListFilterAPI(APIView):
+    def get(self, request, id, format=None, *args, **kwargs):
+        playlist = VideoPlaylist.objects.get(id=id)
+        value = Video.objects.filter(playlist=playlist)
+        serializer = VideoSerializer(value, many=True)
         return Response(serializer.data)

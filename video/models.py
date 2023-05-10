@@ -98,9 +98,15 @@ class StickyPosition(models.Model):
     left = models.IntegerField(blank=True, null=True)
 
 
+class StickyPlayer(models.Model):
+    height = models.IntegerField(blank=True, null=True)
+    width = models.IntegerField(blank=True, null=True)
+
+
 class Sticky(models.Model):
     stick = models.BooleanField("Sticky", blank=True, null=True, default=False)
     position = models.ForeignKey(StickyPosition, on_delete=models.SET_NULL, blank=True, null=True)
+    playerSize = models.ForeignKey(StickyPlayer, on_delete=models.SET_NULL, blank=True, null=True)
 
 
 class adUnit(models.Model):

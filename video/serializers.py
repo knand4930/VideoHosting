@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Video, VideoPlaylist, VideoPlayer, ContentUnit, PlayerPosition, PlayerSize, MobilePosition, \
-    MobileSize, StickyPosition, Sticky, adUnit, generalSettings, UserSettings
+    MobileSize, StickyPosition, Sticky, adUnit, generalSettings, UserSettings, StickyPlayer
 
 
 class VideoSerializer(serializers.ModelSerializer):
@@ -81,8 +81,15 @@ class StickyPositionSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class StickyPlayerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StickyPlayer
+        fields = "__all__"
+
+
 class StickySerializer(serializers.ModelSerializer):
     position = StickyPositionSerializer()
+    playerSize = StickyPlayerSerializer()
 
     class Meta:
         model = Sticky

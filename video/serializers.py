@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Video, VideoPlaylist, VideoPlayer, ContentUnit
+from .models import Video, VideoPlaylist, VideoPlayer, ContentUnit, PlayerPosition, PlayerSize, MobilePosition, \
+    MobileSize, StickyPosition, Sticky, adUnit, generalSettings, UserSettings
 
 
 class VideoSerializer(serializers.ModelSerializer):
@@ -9,7 +10,7 @@ class VideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Video
         fields = (
-        'id', 'title', 'playlist', 'user_id', 'description', 'file', 'uploaded_at', 'download_url', 'embed_url')
+            'id', 'title', 'playlist', 'user_id', 'description', 'file', 'uploaded_at', 'download_url', 'embed_url')
 
     def get_download_url(self, obj):
         return obj.get_download_url()
@@ -37,4 +38,77 @@ class VideoPlayerSerializer(serializers.ModelSerializer):
 class ContentUnitSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContentUnit
+        fields = "__all__"
+
+
+"""
+Video Player Unit
+
+"""
+
+
+class PlayerPositionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PlayerPosition
+        fields = "__all__"
+
+
+class PlayerSizeSerializer(serializers.ModelSerializer):
+    position = PlayerPositionSerializer()
+
+    class Meta:
+        model = PlayerSize
+        fields = "__all__"
+
+
+class MobilePositionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MobilePosition
+        fields = "__all__"
+
+
+class MobileSizeSerializer(serializers.ModelSerializer):
+    position = MobilePositionSerializer()
+
+    class Meta:
+        model = MobileSize
+        fields = "__all__"
+
+
+class StickyPositionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StickyPosition
+        fields = "__all__"
+
+
+class StickySerializer(serializers.ModelSerializer):
+    position = StickyPositionSerializer()
+
+    class Meta:
+        model = Sticky
+        fields = "__all__"
+
+
+class adUnitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = adUnit
+        fields = "__all__"
+
+
+class generalSettingsSerializer(serializers.ModelSerializer):
+    playerSize = PlayerSizeSerializer()
+    mobileSize = MobileSizeSerializer()
+
+    class Meta:
+        model = generalSettings
+        fields = "__all__"
+
+
+class UserSettingsSerializer(serializers.ModelSerializer):
+    generalSettings = generalSettingsSerializer()
+    adUnit = adUnitSerializer()
+    sticky = StickySerializer()
+
+    class Meta:
+        model = UserSettings
         fields = "__all__"

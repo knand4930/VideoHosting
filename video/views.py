@@ -11,8 +11,9 @@ from django.http import FileResponse
 from django.conf import settings
 from rest_framework.views import APIView
 
-from .models import Video, VideoPlayer, VideoPlaylist, ContentUnit
-from .serializers import VideoSerializer, VideoPlaylistSerializer, VideoPlayerSerializer, ContentUnitSerializer
+from .models import Video, VideoPlayer, VideoPlaylist, ContentUnit, UserSettings
+from .serializers import VideoSerializer, VideoPlaylistSerializer, VideoPlayerSerializer, ContentUnitSerializer, \
+    UserSettingsSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 
 
@@ -135,3 +136,8 @@ class PlayListFilterAPI(APIView):
         value = Video.objects.filter(playlist=playlist)
         serializer = VideoSerializer(value, many=True)
         return Response(serializer.data)
+
+
+class UserSettingsAPIView(generics.ListCreateAPIView):
+    queryset = UserSettings.objects.all()
+    serializer_class = UserSettingsSerializer

@@ -141,3 +141,8 @@ class PlayListFilterAPI(APIView):
 class UserSettingsAPIView(generics.ListCreateAPIView):
     queryset = UserSettings.objects.all()
     serializer_class = UserSettingsSerializer
+
+
+class UserSettingsDeleteUpdateAPI(generics.RetrieveUpdateDestroyAPIView):
+    queryset = UserSettings.objects.all()
+    serializer_class = UserSettingsSerializer

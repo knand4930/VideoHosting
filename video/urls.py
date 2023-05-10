@@ -1,7 +1,8 @@
 from django.urls import path
 from .views import VideoList, VideoDetail, video_download, video_embed, VideoPlaylistListAPI, VideoPlaylistUpdateDelete, \
     home, VideoPlayerListCreate, VideoPlayerUpdateDelete, VideoPlayerGet, VideoGet, ContentUnitListAPI, \
-    ContentUnitDeleteUpdateAPI, ContentUnitGet, VidoPlayListFilterAPI, PlayListFilterAPI, UserSettingsAPIView
+    ContentUnitDeleteUpdateAPI, ContentUnitGet, VidoPlayListFilterAPI, PlayListFilterAPI, UserSettingsAPIView, \
+    UserSettingsDeleteUpdateAPI
 
 urlpatterns = [
     path('video/list/', VideoList.as_view(), name='video_list'),
@@ -29,4 +30,5 @@ urlpatterns = [
     path('content/unit/get/<uuid:id>/', ContentUnitGet.as_view(), name='ContentUnitGet'),
 
     path('user/settings/player/', UserSettingsAPIView.as_view()),
+    path('user/settings/update/delete/<int:pk>/', UserSettingsDeleteUpdateAPI.as_view()),
 ]

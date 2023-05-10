@@ -29,6 +29,6 @@ urlpatterns = [
     path('content/unit/update/delete/<uuid:pk>', ContentUnitDeleteUpdateAPI.as_view(), name='ContentUnitDeleteUpdateAPI'),
     path('content/unit/get/<uuid:id>/', ContentUnitGet.as_view(), name='ContentUnitGet'),
 
-    path('user/settings/player/', UserSettingsAPIView.as_view()),
-    path('user/settings/update/delete/<int:pk>/', UserSettingsDeleteUpdateAPI.as_view()),
+    path('player/get/post/api/', UserSettingsAPIView.as_view()),
+    path('player/update/delete/api/<int:pk>/', UserSettingsDeleteUpdateAPI.as_view()),
 ]

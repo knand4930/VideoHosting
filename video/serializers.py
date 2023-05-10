@@ -22,7 +22,7 @@ class VideoSerializer(serializers.ModelSerializer):
 class VideoPlaylistSerializer(serializers.ModelSerializer):
     class Meta:
         model = VideoPlaylist
-        fields = ('id', 'name', 'user_id')
+        fields = ('id', 'name', 'user_id', 'video_id')
 
 
 class VideoPlayerSerializer(serializers.ModelSerializer):
@@ -119,3 +119,18 @@ class UserSettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserSettings
         fields = "__all__"
+
+    def create(self, validated_data):
+        generalSettings_data = validated_data.pop('generalSettings')
+        adUnit_data = validated_data.pop('adUnit')
+        sticky_data = validated_data.pop('sticky')
+
+        # Create nested objects using the serializer's create() method
+        generalSettings = generalSettingsSerializer().create(validated_data=generalSettings_data)
+        adUnit = adUnitSerializer().create(validated_data=adUnit_data)
+        sticky = StickySerializer().create(validated_data=sticky_data)
+
+        # Create the UserSettings object with the nested objects
+        user_settings = UserSettings.objects.create(generalSettings=generalSettings, adUnit=adUnit, sticky=sticky,
+                                                    **validated_data)
+        return user_settings

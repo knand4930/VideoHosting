@@ -4,15 +4,9 @@ from main.models import User
 from django.conf import settings
 
 
-class VideoPlaylist(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    name = models.CharField(max_length=200, blank=True, null=True)
-
-
 class Video(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    playlist = models.ForeignKey(VideoPlaylist, on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=100)
     description = models.TextField()
     file = models.FileField(upload_to='videos/')
@@ -27,6 +21,12 @@ class Video(models.Model):
 
     def get_embed_url(self):
         return f'/videos/{self.id}/embed/'
+
+
+class VideoPlaylist(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    name = models.CharField(max_length=200, blank=True, null=True)
+    video_id = models.ManyToManyField(Video, blank=True, null=True, related_name="video playlist+")
 
 
 class VideoPlayer(models.Model):
@@ -57,11 +57,6 @@ class VideoPlayer(models.Model):
     def share(self):
         return f'/video/player/{self.id}/'
 
-
-class ContentUnit(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    player_id = models.ForeignKey(VideoPlayer, on_delete=models.CASCADE, blank=True, null=True)
-    playlist_id = models.ForeignKey(VideoPlaylist, on_delete=models.CASCADE, blank=True, null=True)
 
 
 """
@@ -132,3 +127,10 @@ class UserSettings(models.Model):
     sticky = models.ForeignKey(Sticky, blank=True, null=True, on_delete=models.SET_NULL)
     generalSettings = models.ForeignKey(generalSettings, on_delete=models.SET_NULL, blank=True, null=True)
     adUnit = models.ForeignKey(adUnit, on_delete=models.SET_NULL, blank=True, null=True)
+
+
+class ContentUnit(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    player_id = models.ForeignKey(UserSettings, on_delete=models.CASCADE, blank=True, null=True)
+    playlist_id = models.ForeignKey(VideoPlaylist, on_delete=models.CASCADE, blank=True, null=True)
+

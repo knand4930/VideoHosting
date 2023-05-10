@@ -51,16 +51,16 @@ class VideoPlaylistListAPI(generics.ListCreateAPIView):
     queryset = VideoPlaylist.objects.all()
     serializer_class = VideoPlaylistSerializer
 
-    def post(self, request, format=None):
-        data = request.data
-        if isinstance(data, list):
-            serializer = self.get_serializer(data=request.data, many=True)
-        else:
-            serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # def post(self, request, format=None):
+    #     data = request.data
+    #     if isinstance(data, list):
+    #         serializer = self.get_serializer(data=request.data, many=True)
+    #     else:
+    #         serializer = self.get_serializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class VideoPlaylistUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
@@ -146,3 +146,30 @@ class UserSettingsAPIView(generics.ListCreateAPIView):
 class UserSettingsDeleteUpdateAPI(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserSettings.objects.all()
     serializer_class = UserSettingsSerializer
+
+
+class UserSettingsView(APIView):
+    def get(self, request):
+        user_settings = UserSettings.objects.all()
+        serializer = UserSettingsSerializer(user_settings, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = UserSettingsSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, pk):
+        user_settings = get_object_or_404(UserSettings, pk=pk)
+        serializer = UserSettingsSerializer(user_settings, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        user_settings = get_object_or_404(UserSettings, pk=pk)
+        user_settings.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

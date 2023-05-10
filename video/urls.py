@@ -2,7 +2,7 @@ from django.urls import path
 from .views import VideoList, VideoDetail, video_download, video_embed, VideoPlaylistListAPI, VideoPlaylistUpdateDelete, \
     home, VideoPlayerListCreate, VideoPlayerUpdateDelete, VideoPlayerGet, VideoGet, ContentUnitListAPI, \
     ContentUnitDeleteUpdateAPI, ContentUnitGet, VidoPlayListFilterAPI, PlayListFilterAPI, UserSettingsAPIView, \
-    UserSettingsDeleteUpdateAPI
+    UserSettingsDeleteUpdateAPI, UserSettingsView
 
 urlpatterns = [
     path('video/list/', VideoList.as_view(), name='video_list'),
@@ -31,4 +31,7 @@ urlpatterns = [
 
     path('player/get/post/api/', UserSettingsAPIView.as_view()),
     path('player/update/delete/api/<int:pk>/', UserSettingsDeleteUpdateAPI.as_view()),
+
+    path('player/post/get/api/', UserSettingsView.as_view(), name='UserSettingsView'),
+    path('player/delete/update/api/<int:pk>/', UserSettingsView.as_view(), name='UserSettingsView'),
 ]

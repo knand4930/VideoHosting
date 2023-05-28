@@ -84,3 +84,6 @@ class UserPasswordResetView(APIView):
         serializer.is_valid(raise_exception=True)
         return Response({'msg': 'Password Reset Successfully'}, status=status.HTTP_200_OK)
 
+
+def home(request):
+    return render(request, 'index.html')

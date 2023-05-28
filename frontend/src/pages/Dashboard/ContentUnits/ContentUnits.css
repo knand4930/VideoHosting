@@ -1,0 +1,96 @@
+.palyers {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.palyers-main {
+  width: 100%;
+  display: flex;
+  margin-top: 30px;
+}
+
+.palyers-main-container {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.newPlayerButton {
+  background: red;
+  color: white;
+  border-radius: 5px;
+  width: 200px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.programsContainer {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+
+.playIcon {
+  width: 120px;
+  margin-right: 20px;
+}
+
+.programsBox {
+  padding: 20px;
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid gray;
+  height: 120px;
+  display: flex;
+  margin-bottom: 30px;
+}
+
+.programsBox-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.programsBox-title-div {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.programsBox-button-div {
+  display: flex;
+
+  justify-content: space-between;
+}
+
+.programsBox-title {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.programsBox-button2 {
+  background: red;
+  color: white;
+  border-radius: 5px;
+  width: 150px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.programBox-details {
+  width: 100%;
+  font-size: 20px;
+  display: flex;
+  margin-top: 10px;
+}

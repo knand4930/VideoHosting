@@ -1,0 +1,8 @@
+https://www.brid.tv/instream-ad-units/
+https://www.brid.tv/outstream-ad-units/
+e.g => https://hindi.magzian.com/wp-content/uploads/vast-player/index.html
+
+
+server side ad insertion: https://veeplay.com/server-side-ad-insertion-apis/
+
+review ad server with dashboard: https://www.revive-adserver.com/features/ 
